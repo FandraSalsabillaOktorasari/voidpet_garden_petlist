@@ -72,6 +72,18 @@ class UserPet extends Model
 
     public function scopeFilter($query, array $filters)
     {
+        // Search filter (text index) - search by nickname OR species target
+        $query->when($filters['search'] ?? false, function ($q, $search) {
+            return $q->where(function($query) use ($search) {
+                // Find by nickname
+                $query->where('nickname', 'like', '%' . $search . '%')
+                      // Find by species name via relation
+                      ->orWhereHas('species', function ($q) use ($search) {
+                          $q->where('name', 'like', '%' . $search . '%');
+                      });
+            });
+        });
+
         // Filter berdasarkan Species
         $query->when($filters['species'] ?? false, function ($q, $species) {
             return $q->whereHas('species', function ($q) use ($species) {

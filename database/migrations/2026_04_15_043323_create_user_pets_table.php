@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nickname')->nullable();
             $table->json('element')->nullable(); // Elemen bisa array untuk multi element
             $table->integer('stage')->default(1);
+            $table->integer('level')->default(1);
             $table->boolean('is_favorite')->default(false); // Fitur safe lock
         
             // Bonus Stats

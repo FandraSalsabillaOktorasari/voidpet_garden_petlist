@@ -30,12 +30,20 @@
 
     <!-- Header Section -->
     <header class="bg-gray-800 border-b border-gray-700 p-6 mb-8 shadow-sm">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <span class="text-4xl">🪴</span>
-                <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Voidpet Garden</h1>
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <span class="text-4xl">🪴</span>
+                    <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Voidpet Garden</h1>
+                </div>
+                <div class="text-sm font-medium text-gray-400">Total Pets: <span class="text-white font-bold">{{ $pets->count() }}</span></div>
             </div>
-            <div class="text-sm font-medium text-gray-400">Total Pets: <span class="text-white font-bold">{{ $pets->count() }}</span></div>
+
+            <!-- Navigation -->
+            <nav class="flex space-x-4">
+                <a href="{{ route('pets.index') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium border border-gray-700 shadow-inner">Pet Collection</a>
+                <a href="{{ route('people.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">People (Food Tracking)</a>
+            </nav>
         </div>
     </header>
 
@@ -159,6 +167,11 @@
                 <!-- Filter Section -->
                 <div class="bg-gray-800 p-5 rounded-xl shadow-md border border-gray-700 mb-6">
                     <form action="{{ route('pets.index') }}" method="GET" class="grid grid-cols-2 md:grid-cols-3 gap-4" autocomplete="off">
+
+                        <div class="col-span-2 md:col-span-3 mb-2">
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Search by Name</label>
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search pet nickname or species..." class="w-full bg-gray-900 focus:bg-gray-700 p-2.5 rounded-lg text-white border border-gray-600 outline-none transition-colors">
+                        </div>
 
                         <div>
                             <label class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Species Filter</label>

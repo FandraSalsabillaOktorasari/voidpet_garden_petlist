@@ -18,6 +18,7 @@ class UserPetController extends Controller
         // Memanggil data pet beserta relasinya, lalu mengaplikasikan filter dan sort
         $pets = UserPet::with(['species', 'vividForm'])
             ->filter([
+                'search'     => $request->search,
                 'species'    => $request->species,
                 'element'    => $request->element,
                 'stage'      => $request->stage,
@@ -47,6 +48,7 @@ class UserPetController extends Controller
             'species_id' => 'required|exists:species,id',
             'vivid_form_id' => 'nullable|exists:vivid_forms,id',
             'stage' => 'required|integer|min:1',
+            'level' => 'required|integer|min:1',
             // Stats (bisa ditambahkan validasi max jika ada batasnya di game)
         ]);
 
