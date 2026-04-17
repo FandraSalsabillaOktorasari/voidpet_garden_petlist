@@ -51,6 +51,7 @@
             <nav class="flex space-x-4">
                 <a href="{{ route('pets.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Pet Collection</a>
                 <a href="{{ route('people.index') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium border border-gray-700 shadow-inner">People (Food Tracking)</a>
+                <a href="{{ route('plants.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Plant Vivid Forms</a>
             </nav>
         </div>
     </header>

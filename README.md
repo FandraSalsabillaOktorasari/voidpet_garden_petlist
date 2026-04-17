@@ -1,15 +1,8 @@
-Sesuai dengan tren README modern yang lebih visual dan terstruktur seperti *landing page*, saya telah merombak ulang file kamu.
-
-Versi ini menggunakan **HTML alignment**, **badges**, dan **div containers** agar tampilannya lebih "stand out" saat di-upload ke GitHub.
-
------
-
-````markdown
 <p align="center">
-  <img src="https://via.placeholder.com/1200x600.png?text=Voidpet+Garden+-+Pet+Manager" alt="Voidpet Garden Manager Banner" width="800">
+  <img src="https://via.placeholder.com/1200x600.png?text=Voidpet+Garden+-+Manager" alt="Voidpet Garden Manager Banner" width="800">
 </p>
 
-<h1 align="center">🪴 Voidpet Garden: Pet Collection Manager</h1>
+<h1 align="center">🪴 Voidpet Garden: Ultimate Collection Manager</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Laravel-11-red?style=for-the-badge&logo=laravel" alt="Laravel 11">
@@ -19,14 +12,14 @@ Versi ini menggunakan **HTML alignment**, **badges**, dan **div containers** aga
 </p>
 
 <p align="center">
-  <strong>A professional collection manager for your Voidpets.</strong><br />
-  Track stats, filter species, and protect your fabled finds with an elegant dark interface.
+  <strong>A professional collection manager for Voidpets.</strong><br />
+  Track stats, log NPC favorite foods, checklist your plant's vivid forms, and protect your fabled finds with an elegant dark interface.
 </p>
 
 ---
 
 ## 📑 Table of Contents
-- [✨ Features](#-features)
+- [✨ Core Features](#-core-features)
 - [🚀 Tech Stack](#-tech-stack)
 - [🛠️ Installation](#️-installation)
 - [🏗️ Database Architecture](#️-database-architecture)
@@ -34,27 +27,27 @@ Versi ini menggunakan **HTML alignment**, **badges**, dan **div containers** aga
 
 ---
 
-## ✨ Features
+## ✨ Core Features
 
 <table width="100%">
   <tr>
     <td width="50%">
-      <b>🐾 55+ Species Database</b><br />
-      Pre-seeded data covering all known species and their elemental types.
+      <b>🐾 Pet Collection & Stats</b><br />
+      Track 55+ species. Separate management for Bonus Stats (Intensity/Clarity) and Battle Stats. Safe Lock protection available.
     </td>
     <td width="50%">
-      <b>🌈 Vivid Form Support</b><br />
-      Track specific forms (Void, Water, Metal, etc.) with accurate rarity tiers.
+      <b>👥 NPC Food Tracking</b><br />
+      Keep a log of Gift (+) and Throw (-) values for every food given to NPCs. Dynamic dictionary with TomSelect.
     </td>
   </tr>
   <tr>
     <td width="50%">
-      <b>⚔️ Dual Stats Tracking</b><br />
-      Separate management for Bonus Stats (Intensity/Clarity) and Battle Stats.
+      <b>🪴 Plant Vivid Forms</b><br />
+      Visual checklist grouped by Box Element. Keep track of which Vivid Forms you have unlocked for every single plant species.
     </td>
     <td width="50%">
-      <b>🛡️ Safe Lock System</b><br />
-      One-click protection to prevent accidental deletion of your prized pets.
+      <b>🔍 Live Search & Filter</b><br />
+      Lightning-fast local searching. Filter pets by element or rarity. Search within specific plant forms instantly.
     </td>
   </tr>
 </table>
@@ -64,8 +57,9 @@ Versi ini menggunakan **HTML alignment**, **badges**, dan **div containers** aga
 ## 🚀 Tech Stack
 
 - **Backend:** Laravel 11 (PHP 8.2+)
-- **Frontend:** Tailwind CSS & TomSelect (Searchable Multi-select)
-- **Database:** Optimized for SQLite, MySQL, and PostgreSQL
+- **Frontend:** HTML5, Tailwind CSS, Vanilla JS
+- **Plugins:** TomSelect (Searchable Multi-select dropdowns)
+- **Database:** SQLite (Default), scalable to MySQL/PostgreSQL
 
 ---
 
@@ -73,51 +67,58 @@ Versi ini menggunakan **HTML alignment**, **badges**, dan **div containers** aga
 
 ### 1. Clone & Install
 ```bash
-git clone [https://github.com/YourUsername/voidpet-garden-petlist.git](https://github.com/YourUsername/voidpet-garden-petlist.git)
+git clone https://github.com/YourUsername/voidpet-garden-petlist.git
 cd voidpet-garden-petlist
 composer install
-````
+```
 
-### 2\. Environment Setup
+### 2. Environment Setup
 
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-### 3\. Database Initialization
+### 3. Database Initialization
 
-> [\!IMPORTANT]
-> This step is crucial to populate the species list\!
+> [!IMPORTANT]
+> This step is crucial to populate the master Species and Vivid Form lists!
 
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-### 4\. Serve
+### 4. Build Assets & Serve (Optional / Development)
 
+If you need to compile Tailwind or other assets (Node.js required):
+```bash
+npm install
+npm run dev
+```
+
+Run the application:
 ```bash
 php artisan serve
 ```
 
------
+---
 
 ## 🏗️ Database Architecture
 
-\<details\>
-\<summary\>\<b\>View Schema Details\</b\>\</summary\>
+<details>
+<summary><b>View Schema Details</b></summary>
 
-The project uses a structured relational approach:
+This project uses an optimized relational approach to keep queries extremely fast:
 
-  - **`UserPets`**: Nicknames, JSON elements, stages, and locked status.
-  - **`Species`**: Reference table for 55 unique base pets.
-  - **`VividForms`**: Mapping of RNG boxes to their respective rarities.
+- **`UserPets`**: Connects to `Species` and `VividForms`. Holds stats, names, stage and lock status.
+- **`People` & `Foods`**: Connected via Many-to-Many pivot table `person_food` keeping track of gift and throw integers.
+- **`Plants`**: Connects to the master `VividForms` table via `plant_vivid_form` pivot to establish "Owned" status.
 
-\</details\>
+</details>
 
------
+---
 
-\<p align="center"\>
-Made with ❤️ for the Voidpet Community\<br /\>
-\<i\>This is a fan-made project and is not officially affiliated with Voidpet.\</i\>
-\</p\>
+<p align="center">
+Made with ❤️ for the Voidpet Community<br />
+<i>This is a fan-made project and is not officially affiliated with Voidpet.</i>
+</p>
