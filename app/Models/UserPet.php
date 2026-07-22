@@ -36,7 +36,7 @@ class UserPet extends Model
             }
 
             // 2. Logika Penentuan Elemen (jika user tidak mengirim array element)
-            if (empty($pet->element)) {
+            if (empty($pet->element) || (is_array($pet->element) && empty(array_filter($pet->element)))) {
                 if ($pet->vivid_form_id) {
                     // Jika pet memiliki Vivid Form
                     $vivid = $pet->vividForm;

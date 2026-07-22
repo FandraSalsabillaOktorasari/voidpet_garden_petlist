@@ -70,10 +70,11 @@
             </div>
 
             <!-- Navigation -->
-            <nav class="flex space-x-4">
-                <a href="{{ route('pets.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Pet Collection</a>
-                <a href="{{ route('people.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">People (Food Tracking)</a>
-                <a href="{{ route('plants.index') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium border border-gray-700 shadow-inner">Plant Vivid Forms</a>
+            <nav class="flex space-x-4 overflow-x-auto pb-2">
+                <a href="{{ route('pets.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">Pet Collection</a>
+                <a href="{{ route('people.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">People (Food Tracking)</a>
+                <a href="{{ route('plants.index') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium border border-gray-700 shadow-inner shrink-0">Plant Vivid Forms</a>
+                <a href="{{ route('pets.checklist') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">Pet Checklist</a>
             </nav>
         </div>
     </header>

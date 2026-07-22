@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voidpet Garden - My Collection</title>
+    <title>Voidpet Garden - Duplicate Pets</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Tom Select (Alternative to Select2 for styling) -->
@@ -37,13 +37,12 @@
                     <span class="text-4xl">🪴</span>
                     <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Voidpet Garden</h1>
                 </div>
-                <div class="text-sm font-medium text-gray-400">Total Pets: <span class="text-white font-bold">{{ $pets->count() }}</span></div>
             </div>
 
             <!-- Navigation -->
             <nav class="flex space-x-4 overflow-x-auto pb-2">
-                <a href="{{ route('pets.index') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium border border-gray-700 shadow-inner shrink-0 animate-pulse">Pet Collection</a>
-                <a href="{{ route('pets.duplicates') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">Duplicate Pets</a>
+                <a href="{{ route('pets.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">Pet Collection</a>
+                <a href="{{ route('pets.duplicates') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium border border-gray-700 shadow-inner shrink-0">Duplicate Pets</a>
                 <a href="{{ route('people.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">People (Food Tracking)</a>
                 <a href="{{ route('plants.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">Plant Vivid Forms</a>
                 <a href="{{ route('pets.checklist') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">Pet Checklist</a>
@@ -68,90 +67,17 @@
             </div>
         @endif
 
-        <!-- Filter Heading & New Pet Action Button -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-            <h2 class="text-2xl font-bold text-white flex items-center">
-                <span class="mr-2">🐾</span> My Pet Collection
-            </h2>
-            <a href="{{ route('pets.create') }}" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-5 rounded-lg shadow-md transition-all transform hover:-translate-y-0.5 inline-flex items-center text-sm">
+        <!-- Page Heading -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 border-b border-gray-700/50 pb-5">
+            <div>
+                <h2 class="text-2xl font-bold text-white flex items-center mb-1">
+                    <span class="mr-2">👯</span> Duplicate Pets
+                </h2>
+                <p class="text-gray-400 text-sm">View and manage pets that share the exact same species and form combination.</p>
+            </div>
+            <a href="{{ route('pets.create') }}" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-5 rounded-lg shadow-md transition-all transform hover:-translate-y-0.5 inline-flex items-center text-sm shrink-0">
                 <span class="mr-1.5">➕</span> Add New Pet
             </a>
-        </div>
-
-        <!-- Filter Section -->
-        <div class="bg-gray-800 p-5 rounded-xl shadow-md border border-gray-700 mb-8">
-            <form action="{{ route('pets.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-4 items-end" autocomplete="off">
-                <div>
-                    <label class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Search</label>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search nickname or species..." class="w-full bg-gray-900 focus:bg-gray-700 p-2.5 rounded-lg text-white border border-gray-650 focus:border-indigo-500 outline-none transition-colors">
-                </div>
-
-                <div>
-                    <label class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Species</label>
-                    <select id="search-species" name="species" placeholder="Filter species..." autocomplete="off">
-                        <option value="">All Species</option>
-                        @foreach($speciesList as $s)
-                            <option value="{{ $s->name }}" {{ request('species') == $s->name ? 'selected' : '' }}>{{ $s->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Element</label>
-                    <select id="search-element" name="element" placeholder="Filter element..." autocomplete="off">
-                        <option value="">All Elements</option>
-                        @foreach(['water','fire','earth','wood','metal'] as $el)
-                            <option value="{{ $el }}" {{ request('element') == $el ? 'selected' : '' }}>{{ ucfirst($el) }}</option>
-                            <option value="Deviant {{ $el }}" {{ request('element') == "Deviant $el" ? 'selected' : '' }}>Deviant {{ ucfirst($el) }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Vivid Form</label>
-                    <select id="search-vivid" name="vivid_form" placeholder="Filter form..." autocomplete="off">
-                        <option value="">All Forms</option>
-                        @foreach($vividForms as $v)
-                            <option value="{{ $v->name }}" {{ request('vivid_form') == $v->name ? 'selected' : '' }}>{{ $v->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Rarity</label>
-                    <select id="search-rarity" name="rarity" placeholder="Filter rarity..." autocomplete="off">
-                        <option value="">All Rarities</option>
-                        @foreach(['rare', 'fabled', 'mythical', 'absurd'] as $rarity)
-                            <option value="{{ $rarity }}" {{ request('rarity') == $rarity ? 'selected' : '' }}>{{ ucfirst($rarity) }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Box Type</label>
-                    <select id="search-box" name="box_type" placeholder="Filter box type..." autocomplete="off">
-                        <option value="">All Box Types</option>
-                        @foreach(['void', 'water', 'metal', 'fire', 'earth', 'wood'] as $box)
-                            <option value="{{ $box }}" {{ request('box_type') == $box ? 'selected' : '' }}>{{ ucfirst($box) }} Box</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Sort By</label>
-                    <select id="search-sort" name="sort" placeholder="Sort by..." autocomplete="off">
-                        <option value="recent" {{ request('sort') == 'recent' || !request('sort') ? 'selected' : '' }}>Recent</option>
-                        <option value="stats" {{ request('sort') == 'stats' ? 'selected' : '' }}>Highest Stats</option>
-                    </select>
-                </div>
-
-                <div class="flex items-end">
-                    <div class="flex space-x-2 w-full">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white transition-colors duration-200 px-4 py-2.5 rounded-lg text-sm font-bold flex-1 text-center shadow-sm">Filter</button>
-                        <a href="{{ route('pets.index') }}" class="bg-gray-600 hover:bg-gray-500 text-white transition-colors duration-200 px-4 py-2.5 rounded-lg text-sm font-bold text-center shadow-sm">Reset</a>
-                    </div>
-                </div>
-            </form>
         </div>
 
         <!-- Full-Width Collection Table Container -->
@@ -170,34 +96,52 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-700/50">
-                        @forelse($pets as $pet)
-                            @php
-                                $elements = is_string($pet->element) ? json_decode($pet->element, true) : $pet->element;
-                                if(!is_array($elements)) $elements = [$pet->element];
-                            @endphp
-                            <tr 
-                                onclick="openModal(this)"
-                                class="hover:bg-gray-700/30 cursor-pointer transition-colors duration-150"
-                                data-nickname="{{ $pet->nickname ?? $pet->species->name }}"
-                                data-species="{{ $pet->species->name }}"
-                                data-vivid-form="{{ $pet->vividForm ? $pet->vividForm->name : 'Normal' }}"
-                                data-level="{{ $pet->level }}"
-                                data-stage="{{ $pet->stage }}"
-                                data-elements='@json($elements)'
-                                data-favorite="{{ $pet->is_favorite ? '1' : '0' }}"
-                                data-intensity="{{ $pet->intensity }}"
-                                data-clarity="{{ $pet->clarity }}"
-                                data-stability="{{ $pet->stability }}"
-                                data-hp="{{ $pet->hp }}"
-                                data-focus="{{ $pet->focus }}"
-                                data-calm="{{ $pet->calm }}"
-                                data-speed="{{ $pet->speed }}"
-                                data-balance="{{ $pet->balance }}"
-                                data-strength="{{ $pet->strength }}"
-                                data-total-bonus="{{ $pet->total_bonus_stat }}"
-                                data-total-battle="{{ $pet->total_battle_stat }}"
-                                data-total-overall="{{ $pet->total_stat }}"
-                            >
+                        @forelse($duplicates as $groupKey => $group)
+                            <!-- Group Header -->
+                            <tr class="bg-gray-800/80">
+                                <td colspan="7" class="px-6 py-3 border-l-4 border-emerald-500">
+                                    @php 
+                                        $firstPet = $group->first(); 
+                                        $formName = $firstPet->vividForm ? $firstPet->vividForm->name : 'Normal';
+                                    @endphp
+                                    <div class="flex items-center space-x-2">
+                                        <span class="font-bold text-emerald-400">{{ $firstPet->species->name }}</span>
+                                        <span class="text-gray-400 text-sm">•</span>
+                                        <span class="text-gray-300 text-sm">{{ $formName }}</span>
+                                        <span class="ml-2 bg-gray-700 text-gray-300 py-0.5 px-2 rounded-full text-xs font-semibold">{{ $group->count() }} duplicates</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <!-- Group Members -->
+                            @foreach($group as $pet)
+                                @php
+                                    $elements = is_string($pet->element) ? json_decode($pet->element, true) : $pet->element;
+                                    if(!is_array($elements)) $elements = [$pet->element];
+                                @endphp
+                                <tr 
+                                    onclick="openModal(this)"
+                                    class="hover:bg-gray-700/30 cursor-pointer transition-colors duration-150"
+                                    data-nickname="{{ $pet->nickname ?? $pet->species->name }}"
+                                    data-species="{{ $pet->species->name }}"
+                                    data-vivid-form="{{ $pet->vividForm ? $pet->vividForm->name : 'Normal' }}"
+                                    data-level="{{ $pet->level }}"
+                                    data-stage="{{ $pet->stage }}"
+                                    data-elements='@json($elements)'
+                                    data-favorite="{{ $pet->is_favorite ? '1' : '0' }}"
+                                    data-intensity="{{ $pet->intensity }}"
+                                    data-clarity="{{ $pet->clarity }}"
+                                    data-stability="{{ $pet->stability }}"
+                                    data-hp="{{ $pet->hp }}"
+                                    data-focus="{{ $pet->focus }}"
+                                    data-calm="{{ $pet->calm }}"
+                                    data-speed="{{ $pet->speed }}"
+                                    data-balance="{{ $pet->balance }}"
+                                    data-strength="{{ $pet->strength }}"
+                                    data-total-bonus="{{ $pet->total_bonus_stat }}"
+                                    data-total-battle="{{ $pet->total_battle_stat }}"
+                                    data-total-overall="{{ $pet->total_stat }}"
+                                >
                                 <td class="px-6 py-4.5">
                                     <div class="flex items-center space-x-2">
                                         @if($pet->is_favorite)
@@ -277,18 +221,20 @@
                                     </form>
                                 </td>
                             </tr>
+                            @endforeach
                         @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-12 text-center text-gray-500 border-2 border-dashed border-gray-700/50 bg-gray-808/30 rounded-b-xl my-4">
-                                    <span class="text-4xl block mb-3">🕸️</span>
-                                    <h3 class="text-lg font-bold text-gray-300 mb-1">Your Garden is Empty</h3>
-                                    <p class="text-sm text-gray-500">No pets match your criteria, or you haven't sprouted any pets yet!</p>
+                                <td colspan="7" class="px-6 py-12 text-center text-gray-500 border-2 border-dashed border-gray-700/50 bg-gray-808/30 rounded-b-xl my-4">
+                                    <span class="text-4xl block mb-3">✅</span>
+                                    <h3 class="text-lg font-bold text-gray-300 mb-1">No Duplicates Found!</h3>
+                                    <p class="text-sm">Every pet in your garden is unique.</p>
                                 </td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
+        </div>
         </div>
     </main>
 

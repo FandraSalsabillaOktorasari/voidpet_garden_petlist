@@ -1,13 +1,13 @@
-<p align="center">
+﻿<p align="center">
   <img src="https://via.placeholder.com/1200x600.png?text=Voidpet+Garden+-+Manager" alt="Voidpet Garden Manager Banner" width="800">
 </p>
 
 <h1 align="center">🪴 Voidpet Garden: Ultimate Collection Manager</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Laravel-11-red?style=for-the-badge&logo=laravel" alt="Laravel 11">
+  <img src="https://img.shields.io/badge/Laravel-13-red?style=for-the-badge&logo=laravel" alt="Laravel 13">
   <img src="https://img.shields.io/badge/Tailwind_CSS-3.0-blue?style=for-the-badge&logo=tailwind-css" alt="Tailwind CSS">
-  <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php" alt="PHP Version">
+  <img src="https://img.shields.io/badge/PHP-8.4+-777BB4?style=for-the-badge&logo=php" alt="PHP Version">
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
 </p>
 
@@ -23,6 +23,7 @@
 - [🚀 Tech Stack](#-tech-stack)
 - [🛠️ Installation](#️-installation)
 - [🏗️ Database Architecture](#️-database-architecture)
+- [🐛 Known Issues & Solutions](#-known-issues--solutions)
 - [🤝 Contributing](#-contributing)
 
 ---
@@ -50,16 +51,36 @@
       Lightning-fast local searching. Filter pets by element or rarity. Search within specific plant forms instantly.
     </td>
   </tr>
+  <tr>
+    <td width="50%">
+      <b>👯 Duplicate Pet Detector</b><br />
+      Automatically groups pets that share the exact same Species + Vivid Form combination. Visually separates each group and sorts them by Total Bonus Stat (highest first) so you can immediately identify which duplicate to keep or release.
+    </td>
+    <td width="50%">
+      <b>📋 Pet Checklist</b><br />
+      Keep track of which pets you still need to collect across all species and vivid form combinations.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <b>🔄 Auto-Sync New Species</b><br />
+      Fetches and extracts the latest Voidpet Dex data directly from the game's compiled JavaScript bundles. Handles both numeric and TypeScript Enum element mappings flawlessly.
+    </td>
+    <td width="50%">
+      <b>✨ Modern Architecture</b><br />
+      Maintains performance by keeping the core list synced without manual database intervention.
+    </td>
+  </tr>
 </table>
 
 ---
 
 ## 🚀 Tech Stack
 
-- **Backend:** Laravel 11 (PHP 8.2+)
+- **Backend:** Laravel 13 (PHP 8.4+)
 - **Frontend:** HTML5, Tailwind CSS, Vanilla JS
 - **Plugins:** TomSelect (Searchable Multi-select dropdowns)
-- **Database:** SQLite (Default), scalable to MySQL/PostgreSQL
+- **Database:** MySQL (default), scalable to PostgreSQL
 
 ---
 
@@ -118,7 +139,51 @@ This project uses an optimized relational approach to keep queries extremely fas
 
 ---
 
+## 🐛 Known Issues & Solutions
+
+### `storage/logs/laravel.log` — Permission Denied (Windows)
+
+**Symptom:** `UnexpectedValueException` — The stream or file `.../storage/logs/laravel.log` could not be opened in append mode: Failed to open stream: Permission denied.
+
+**Cause:** On Windows, the PHP process (run via `php artisan serve`) may not have write permission to the `storage/` directory, especially after cloning the repo or if the file was created by a different user/process.
+
+**Solution:** Run the following command once in PowerShell (as Administrator if needed):
+
+```powershell
+icacls "D:\path\to\voidpet_garden_petlist\storage" /grant Everyone:(OI)(CI)F /T
+```
+
+Replace `D:\path\to\voidpet_garden_petlist` with your actual project path. This grants full write access recursively to the entire `storage/` folder.
+
+---
+
+### `Undefined variable $pets` on `/pets/duplicates` page
+
+**Symptom:** `ErrorException` — Undefined variable `$pets` (View: `resources/views/pets/duplicates.blade.php`).
+
+**Cause:** The `duplicates()` method in `UserPetController` was only passing `$duplicates` (a grouped collection) to the view, but the blade template iterated over `$pets` — a flat list. This mismatch was left over after a view refactor that removed the filter section but did not update the variable name in the loop.
+
+**Solution:** Updated `UserPetController@duplicates` to also pass `$pets` as a flattened, sorted collection:
+
+```php
+// Flat list of all duplicate pets, sorted by total_bonus_stat descending
+$pets = $duplicates->flatten()->sortByDesc('total_bonus_stat')->values();
+
+return view('pets.duplicates', compact('duplicates', 'pets'));
+```
+
+---
+
+---
+
+### Namespace declaration statement has to be the very first statement
+
+**Symptom:** FatalError when hitting /species/sync.
+**Cause:** Saving PHP files using PowerShell with default UTF-8 adds a hidden Byte Order Mark (BOM) \xEF\xBB\xBF at the beginning of the file, which PHP interprets as output before the <?php tag.
+**Solution:** Re-save the file using .NET classes or an IDE configured to use UTF-8 without BOM.
+
 <p align="center">
 Made with ❤️ for the Voidpet Community<br />
 <i>This is a fan-made project and is not officially affiliated with Voidpet.</i>
 </p>
+
