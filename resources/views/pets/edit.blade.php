@@ -67,7 +67,7 @@
                 <h2 class="text-2xl font-bold flex items-center text-purple-400">
                     <span class="mr-2">âœï¸ </span> Edit Pet
                 </h2>
-                <p class="text-gray-400 text-sm mt-1">Update the stats and details for {{ $pet->nickname ?? $pet->species->name }}.</p>
+                <p class="text-gray-400 text-sm mt-1">Update the stats and details for {{ $pet->nickname ⭐⭐ $pet->species->name }}.</p>
             </div>
 
             <!-- Error Banner -->
@@ -99,7 +99,7 @@
                         <select id="form-species" name="species_id" required autocomplete="off">
                             <option value="">Search Species...</option>
                             @foreach($speciesList as $s)
-                                <option value="{{ $s->id }}" {{ (old('species_id', $pet->species_id) == $s->id) ? 'selected' : '' }}>{{ $s->name }} ({{ ucfirst($s->default_element) }})</option>
+                                <option value="{{ $s->id }}" {{ (old('species_id', $pet->species_id) == $s->id) ⭐ 'selected' : '' }}>{{ $s->name }} ({{ ucfirst($s->default_element) }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -118,7 +118,7 @@
                         <select id="form-vivid" name="vivid_form_id" autocomplete="off">
                             <option value="">Normal / No Vivid</option>
                             @foreach($vividForms as $v)
-                                <option value="{{ $v->id }}" {{ (old('vivid_form_id', $pet->vivid_form_id) == $v->id) ? 'selected' : '' }}>{{ $v->name }} ({{ ucfirst($v->box_type) }} Box)</option>
+                                <option value="{{ $v->id }}" {{ (old('vivid_form_id', $pet->vivid_form_id) == $v->id) ⭐ 'selected' : '' }}>{{ $v->name }} ({{ ucfirst($v->box_type) }} Box)</option>
                             @endforeach
                         </select>
                     </div>
@@ -199,8 +199,8 @@
                 <!-- Favorite Checkbox & Submit Action -->
                 <div class="pt-6 border-t border-gray-700/50 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <label class="flex items-center space-x-3 text-sm text-pink-400 font-semibold cursor-pointer select-none">
-                        <input type="checkbox" name="is_favorite" value="1" {{ old('is_favorite', $pet->is_favorite) ? 'checked' : '' }} class="w-5 h-5 rounded border-gray-600 text-pink-500 focus:ring-pink-500 focus:ring-offset-gray-900 bg-gray-700">
-                        <span>-? Lock as Favorite (Protect from Delete)</span>
+<input type="checkbox" name="is_favorite" value="1" {{ old('is_favorite', $pet->is_favorite) ? 'checked' : '' }} class="w-5 h-5 rounded border-gray-600 text-pink-500 focus:ring-pink-500 focus:ring-offset-gray-900 bg-gray-700">
+                        <span>⭐ Lock as Favorite (Protect from Delete)</span>
                     </label>
 
                     <button type="submit" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all transform active:scale-95">

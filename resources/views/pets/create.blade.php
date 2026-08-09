@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -41,7 +41,7 @@
             <!-- Navigation -->
             <nav class="flex space-x-4 overflow-x-auto pb-2">
                 <a href="{{ route('pets.index') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium border border-gray-700 shadow-inner shrink-0">Pet Collection</a>
-                <a href="{{ route('pets.duplicates') }}" class="{{ request()->routeIs('pets.duplicates') ? 'bg-gray-900 text-white border-gray-700 shadow-inner' : 'text-gray-400 hover:text-white border-transparent hover:bg-gray-700' }} px-3 py-2 rounded-md text-sm font-medium border transition-colors shrink-0">Duplicate Pets</a>
+                <a href="{{ route('pets.duplicates') }}" class="{{ request()->routeIs('pets.duplicates') ? 'bg-gray-900 text-white border-gray-700 shadow-inner' : 'text-gray-400 hover:text-white border-transparent hover:bg-gray-700' }} px-3 py-2 rounded-md text-sm font-medium border transition-colors shrink-0">Duplicate Pets</a>
                 <a href="{{ route('people.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">People (Food Tracking)</a>
                 <a href="{{ route('plants.index') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">Plant Vivid Forms</a>
                 <a href="{{ route('pets.checklist') }}" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors shrink-0">Pet Checklist</a>
@@ -199,7 +199,7 @@
                 <div class="pt-6 border-t border-gray-700/50 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <label class="flex items-center space-x-3 text-sm text-pink-400 font-semibold cursor-pointer select-none">
                         <input type="checkbox" name="is_favorite" value="1" {{ old('is_favorite') ? 'checked' : '' }} class="w-5 h-5 rounded border-gray-600 text-pink-500 focus:ring-pink-500 focus:ring-offset-gray-900 bg-gray-700">
-                        <span>â­ Lock as Favorite (Protect from Delete)</span>
+                        <span>⭐ Lock as Favorite (Protect from Delete)</span>
                     </label>
 
                     <button type="submit" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all transform active:scale-95">
